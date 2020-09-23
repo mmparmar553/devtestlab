@@ -2,6 +2,9 @@
 param
 (
     [Parameter(Mandatory = $true)]
+    [string] $Hostname,
+    
+    [Parameter(Mandatory = $true)]
     [string] $DomainAdminUsername,
 
     [Parameter(Mandatory = $true)]
@@ -59,12 +62,14 @@ function Join-Domain
     [CmdletBinding()]
     param
     (
-        [string] $DomainName,
+        [string] $Hostname,
+		[string] $DomainName,
         [string] $UserName,
         [securestring] $Password,
         [string] $OUPath
     )
 
+	Rename-Computer $Hostname
     if ((Get-WmiObject Win32_ComputerSystem).Domain -eq $DomainName)
     {
         Write-Host "Computer $($Env:COMPUTERNAME) is already joined to domain $DomainName."

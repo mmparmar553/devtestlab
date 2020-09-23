@@ -9,7 +9,12 @@
   "iconUri": "https://raw.githubusercontent.com/Azure/azure-devtestlab/master/Artifacts/windows-domain-join/domainJoinArtifact.png",
   "targetOsType": "Windows",
   "parameters": {
-    "domainAdminUsername": {
+    "hostname": {
+      "type": "string",
+      "displayName": "vmname",
+      "description": "name of the VM"
+    },
+      "domainAdminUsername": {
       "type": "string",
       "displayName": "Domain join user account",
       "description": "The Active Directory (AD) account (e.g. CORP\\user or user@corp.contoso.com) that has permissions to join the domain"
@@ -33,7 +38,7 @@
     }
   },
   "runCommand": {
-    "commandToExecute": "[concat('powershell.exe -ExecutionPolicy bypass \"& ./Domainjoin.ps1', ' -DomainAdminUsername ''', parameters('domainAdminUsername'), ''' -DomainAdminPassword ''', parameters('domainAdminPassword'), ''' -DomainToJoin ', parameters('domainToJoin'), ' -OUPath ''', parameters('ouPath'), '''\"')]"
+    "commandToExecute": "[concat('powershell.exe -ExecutionPolicy bypass \"& ./Domainjoin.ps1', '-Hostname''', parameters('Hostname'),' -DomainAdminUsername ''', parameters('domainAdminUsername'), ''' -DomainAdminPassword ''', parameters('domainAdminPassword'), ''' -DomainToJoin ', parameters('domainToJoin'), ' -OUPath ''', parameters('ouPath'), '''\"')]"
   },
   "postDeployActions": [
     {
@@ -41,3 +46,4 @@
     }
   ]
 }
+
